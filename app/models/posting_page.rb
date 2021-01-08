@@ -1,0 +1,2 @@
+class PostingPage < ApplicationRecord
+end
