@@ -1,31 +1,27 @@
 class PostingPagesController < ApplicationController
   before_action :set_posting_page, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
-  # GET /posting_pages
-  # GET /posting_pages.json
   def index
     @posting_pages = PostingPage.all
   end
 
-  # GET /posting_pages/1
-  # GET /posting_pages/1.json
   def show
   end
 
-  # GET /posting_pages/new
   def new
-    @posting_page = PostingPage.new
+    if params[:back]
+      @posting_page = PostingPage.new(posting_page_params)
+    else
+      @posting_page = current_user.posting_pages.build
+    end
   end
 
-  # GET /posting_pages/1/edit
   def edit
   end
 
-  # POST /posting_pages
-  # POST /posting_pages.json
   def create
-    @posting_page = PostingPage.new(posting_page_params)
-
+    @posting_page = current_user.posting_pages.build(posting_page_params)
     respond_to do |format|
       if @posting_page.save
         format.html { redirect_to @posting_page, notice: 'Posting page was successfully created.' }
@@ -37,8 +33,6 @@ class PostingPagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /posting_pages/1
-  # PATCH/PUT /posting_pages/1.json
   def update
     respond_to do |format|
       if @posting_page.update(posting_page_params)
@@ -51,8 +45,6 @@ class PostingPagesController < ApplicationController
     end
   end
 
-  # DELETE /posting_pages/1
-  # DELETE /posting_pages/1.json
   def destroy
     @posting_page.destroy
     respond_to do |format|
@@ -61,14 +53,26 @@ class PostingPagesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_posting_page
-      @posting_page = PostingPage.find(params[:id])
-    end
+  def confirm
+    @posting_page = current_user.posting_pages.build(posting_page_params)
+    render :new if @posting_page.invalid?
+  end
 
-    # Only allow a list of trusted parameters through.
-    def posting_page_params
-      params.require(:posting_page).permit(:content)
+  private
+
+  def set_posting_page
+    @posting_page = PostingPage.find(params[:id])
+  end
+
+  def ensure_correct_user
+    @posting_page = PostingPage.find(params[:id])
+    if @posting_page.user_id != current_user.id
+      flash[:notice] = "No authority"
+      redirect_to posting_pages_url
     end
+  end
+
+  def posting_page_params
+    params.require(:posting_page).permit(:content, :image, :image_cache)
+  end
 end

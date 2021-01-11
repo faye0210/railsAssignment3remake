@@ -1,8 +1,7 @@
-<%= form_with(model: posting_page, local: true) do |form| %>
+<%= form_with(model: posting_page, local: true, url:choose_new_or_edit) do |form| %>
   <% if posting_page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(posting_page.errors.count, "error") %> prohibited this posting_page from being saved:</h2>
-
       <ul>
       <% posting_page.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,13 +9,14 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+  <div class="input_area">
     <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+    <%= form.text_area :content, placeholder: "What are you doing?" %>
+    <%= form.label :image %>
+    <%= image_tag(@posting_page.image.url) if @posting_page.image && @posting_page.image.url %>
+    <%= form.file_field :image %>
+    <%= form.hidden_field :image_cache %>
+    <br>
+    <%= form.submit 'create new post', class: 'button' %>
   </div>
 <% end %>

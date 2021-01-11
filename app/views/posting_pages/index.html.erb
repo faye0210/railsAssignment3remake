@@ -1,27 +1,30 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Posting Pages</h1>
+<h1>Home</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posting_pages.each do |posting_page| %>
+  <% @posting_pages.each do |posting_page| %>
+    <tbody>
+      <tr>
+        <td><%= posting_page.user.name %></td>
+      </tr>
       <tr>
         <td><%= posting_page.content %></td>
-        <td><%= link_to 'Show', posting_page %></td>
-        <td><%= link_to 'Edit', edit_posting_page_path(posting_page) %></td>
-        <td><%= link_to 'Destroy', posting_page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
-  </tbody>
+      <tr>
+        <td><%= image_tag(posting_page.image.url) %></td>
+      </tr>
+    </tbody>
+    <tfooter>
+      <tr>
+        <td>
+          <%= link_to 'Show', posting_page %>
+          <% if posting_page.user.id == current_user.id %>
+            <%= link_to 'Edit', edit_posting_page_path(posting_page) %>
+            <%= link_to 'Destroy', posting_page, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      </tr>
+    </tfooter>
+
+  <% end %>
 </table>
-
-<br>
-
-<%= link_to 'New Posting Page', new_posting_page_path %>
+<%= link_to '投稿する', new_posting_page_path %>

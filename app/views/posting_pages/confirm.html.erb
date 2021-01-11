@@ -1,0 +1,15 @@
+<h1>確認画面</h1>
+<br>
+<h3 id="message">以下の内容でツイートする。</h3>
+<%= form_with(model: @posting_page, url: posting_pages_path, local: true) do |form| %>
+  <p>User: <%= @posting_page.user.name %></p>
+  <%= form.hidden_field :content %>
+  <p>Content: <%= @posting_page.content %></p>
+  <%= form.hidden_field :image_cache %>
+  <p>Image: <%= image_tag(@posting_page.image.url) if @posting_page.image && @posting_page.image.url %></p>
+  <%= form.submit "Post" %>
+<% end %>
+<%= form_with(model:@posting_page, url:new_posting_page_path, local:true, method:"get") do |form| %>
+  <%= form.hidden_field :image_cache %>
+  <%= form.submit "Back", name: "back" %>
+<% end %>
