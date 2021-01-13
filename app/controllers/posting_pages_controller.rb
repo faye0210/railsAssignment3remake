@@ -7,6 +7,7 @@ class PostingPagesController < ApplicationController
   end
 
   def show
+    @favourite = current_user.favourites.find_by(posting_page_id: @posting_page.id)
   end
 
   def new

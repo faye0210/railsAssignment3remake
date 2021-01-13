@@ -1,28 +1,30 @@
 <h1>Home</h1>
-<table>
-  <% @posting_pages.each do |posting_page| %>
-    <tbody>
-      <tr>
-        <td><%= posting_page.user.name %></td>
-      </tr>
-      <tr>
-        <td><%= posting_page.content %></td>
-      </tr>
-      <tr>
-        <td><%= image_tag(posting_page.image.url) %></td>
-      </tr>
-    </tbody>
-    <tfooter>
-      <tr>
-        <td>
-          <%= link_to 'Show', posting_page %>
-          <% if posting_page.user.id == current_user.id %>
-            <%= link_to 'Edit', edit_posting_page_path(posting_page) %>
-            <%= link_to 'Destroy', posting_page, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <% end %>
-        </td>
-      </tr>
-    </tfooter>
-  <% end %>
-</table>
+<div class="post_content">
+  <table>
+    <% @posting_pages.each do |posting_page| %>
+      <tbody>
+        <tr>
+          <td><%= posting_page.user.name %></td>
+        </tr>
+        <tr>
+          <td><%= posting_page.content %></td>
+        </tr>
+        <tr>
+          <td><%= image_tag(posting_page.image.url) %></td>
+        </tr>
+      </tbody>
+      <tfooter>
+        <tr>
+          <td>
+            <%= link_to 'Show', posting_page %>
+            <% if posting_page.user.id == current_user.id %>
+              <%= link_to 'Edit', edit_posting_page_path(posting_page) %>
+              <%= link_to 'Destroy', posting_page, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        </tr>
+      </tfooter>
+    <% end %>
+  </table>
+</div>
 <%= link_to '投稿する', new_posting_page_path %>
