@@ -25,8 +25,9 @@ class PostingPagesController < ApplicationController
     @posting_page = current_user.posting_pages.build(posting_page_params)
     respond_to do |format|
       if @posting_page.save
-        format.html { redirect_to @posting_page, notice: 'Posting page was successfully created.' }
-        format.json { render :show, status: :created, location: @posting_page }
+        ContactMailer.contact_mail(@posting_page).deliver
+          format.html { redirect_to @posting_page, notice: 'Posting page was successfully created.' }
+          format.json { render :show, status: :created, location: @posting_page }
       else
         format.html { render :new }
         format.json { render json: @posting_page.errors, status: :unprocessable_entity }
