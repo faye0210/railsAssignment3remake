@@ -8,26 +8,33 @@ body {
   margin: 0px;
 }
 
-.header {
+.container-fluid {
   background-color: #FFB6C1;
   height: 80px;
-  .menu {
+
+  .row {
     background-color: #696969;
     height: 50px;
 
-    .links {
-      font-size: 1.5rem;
-      color: white;
-      text-decoration: none;
-      padding: 5px 10px;
-    }
+    li {
+      list-style: none;
+      display: inline-block;
 
-  p {
-    vertical-align: bottom;
-    text-align: right;
-    font-size: 1rem;
-    color: white;
-    margin: 0px 20px;
+      a {
+        display: block;
+        font-size: 1.5rem;
+        color: white;
+        text-decoration: none;
+        padding: 5px 10px;
+      }
+
+      p {
+        vertical-align: bottom;
+        text-align: right;
+        font-size: 1rem;
+        color: white;
+        margin: 0px 20px;
+      }
     }
   }
 }
